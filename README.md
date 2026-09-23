@@ -11,14 +11,17 @@ Apple M5 Pro · Node 26.4.0 · Vite+ 1.0.0-rc.0 · 15 fresh-process samples afte
 
 `worker.mjs`: start Node → import `vite-plus` → call `resolveConfig()` on a plain config → exit.
 
-| Work                                                                 |        Time | Share of total |
-| -------------------------------------------------------------------- | ----------: | -------------: |
-| Import `vite-plus` to obtain `resolveConfig`                         | **38.4 ms** |      **50.1%** |
-| Call `resolveConfig()`                                               |     11.6 ms |          15.1% |
-| Other: process startup/exit, worker setup, output and spawn overhead |     26.7 ms |          34.8% |
-| **Total**                                                            | **76.7 ms** |       **100%** |
+| Work | Time | Share of import + resolve |
+| --- | ---: | ---: |
+| Import `vite-plus` to obtain `resolveConfig` | **38.4 ms** | **76.8%** |
+| Call `resolveConfig()` | **11.6 ms** | **23.2%** |
+| **Configuration-loading subtotal** | **50.0 ms** | **100%** |
+| Other: process startup/exit, worker setup, output and spawn overhead | 26.7 ms | Excluded |
+| Full process total | 76.7 ms | — |
 
-Other is the remainder of the medians, not a separately profiled phase. Import accounts for **76.8% of import + config resolution**.
+**Considering only import + resolve, reducing `resolveConfig()` to 0 ms saves at most 23.2%: 50.0 → 38.4 ms.** Import remains the larger cost at **76.8%**. These percentages exclude process lifecycle and other overhead; they are not whole-command speedups.
+
+Other is the remainder of the medians, not a separately profiled phase, and is outside this comparison's optimization scope.
 
 ## Actual tools, same input file
 
