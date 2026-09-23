@@ -1,0 +1,15 @@
+{
+  "name": "vite-plus-config-import-bench",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "bench": "node bench.mjs"
+  },
+  "devDependencies": {
+    "vite-plus": "1.0.0-rc.0"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "packageManager": "pnpm@11.24.0"
+}
