@@ -123,6 +123,10 @@ try {
       "total ms": median.totalMs.toFixed(1),
       "import ms": median.importMs?.toFixed(1) ?? "-",
       "resolve ms": median.resolveMs?.toFixed(1) ?? "-",
+      "other ms":
+        median.importMs === undefined
+          ? "-"
+          : (median.totalMs - median.importMs - median.resolveMs).toFixed(1),
     })),
   );
   const output = join(root, `results-${cacheMode}.json`);
